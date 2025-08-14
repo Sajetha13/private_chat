@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Private Chat Login</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="login-screen">
+    <h2>Welcome to Private Chat</h2>
+    <input type="text" id="username" placeholder="Enter your username" />
+    <button id="login-btn">Login</button>
+  </div>
+
+  <script>
+    document.getElementById("login-btn").addEventListener("click", () => {
+      const username = document.getElementById("username").value.trim();
+      if (!username) return alert("Please enter a username");
+
+      fetch("/create_user", {
+        method: "POST",
+        body: new URLSearchParams({ username })
+      }).then(() => {
+        window.location.href = `/chat/${username}`;
+      });
+    });
+  </script>
+</body>
+</html>

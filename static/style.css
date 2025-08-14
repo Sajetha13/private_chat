@@ -1,0 +1,103 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fff5e6; /* light cream */
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+.login-screen, .chat-screen {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 12px;
+  background: #ffe6cc;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: orange;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #ff9900;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: #f0f0f0;
+}
+
+.message {
+  padding: 8px 12px;
+  border-radius: 12px;
+  margin: 5px;
+  max-width: 60%;
+  word-wrap: break-word;
+}
+
+.message.you {
+  background-color: orange;
+  align-self: flex-end;
+  color: white;
+}
+
+.message.friend {
+  background-color: lightgreen;
+  align-self: flex-start;
+}
+
+
+#logout-btn {
+  margin-top: 10px; /* space above the logout button */
+  display: block;
+  width: 100%;
+}
+
+#chat-form button {
+  width: auto; /* make it just fit the text */
+  flex-shrink: 0; /* prevent shrinking */
+}
+#chat-form {
+  display: flex;
+  gap: 10px;       /* space between input and send button */
+  align-items: center; /* vertical alignment */
+}
+
+#message-input {
+  flex: 1;          /* take all available space */
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+#chat-form button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: orange;
+  color: white;
+  cursor: pointer;
+}

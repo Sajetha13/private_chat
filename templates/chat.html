@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Private Chat</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="chat-screen">
+    <h2>Logged in as: {{ username }}</h2>
+    <input type="text" id="receiver" placeholder="Friend's username" />
+    <div id="messages" class="messages"></div>
+    <form id="chat-form">
+      <input type="text" id="message-input" placeholder="Type your message..." autocomplete="off" required />
+      <button type="submit">Send</button>
+    </form>
+    <button id="logout-btn">Logout</button>
+  </div>
+
+  <script>
+    const username = "{{ username }}";
+    const messagesDiv = document.getElementById("messages");
+    const form = document.getElementById("chat-form");
+    const messageInput = document.getElementById("message-input");
+    const receiverInput = document.getElementById("receiver");
+
+    async function fetchMessages() {
+      const receiver = receiverInput.value.trim();
+      if (!receiver) return;
+      const res = await fetch(`/messages?sender=${username}&receiver=${receiver}`);
+      const data = await res.json();
+      messagesDiv.innerHTML = "";
+      data.messages.forEach(msg => {
+        const div = document.createElement("div");
+        div.className = "message " + (msg.sender === username ? "you" : "friend");
+        div.textContent = msg.text;
+        messagesDiv.appendChild(div);
+      });
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const text = messageInput.value.trim();
+      const receiver = receiverInput.value.trim();
+      if (!text || !receiver) return;
+      await fetch("/messages", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded"},
+        body: `sender=${username}&receiver=${receiver}&text=${encodeURIComponent(text)}`
+      });
+      messageInput.value = "";
+      fetchMessages();
+    });
+
+    setInterval(fetchMessages, 1000);
+
+    document.getElementById("logout-btn").addEventListener("click", () => {
+    localStorage.removeItem("username");  // Forget the user
+    window.location.href = "/";            // Back to landing page
+    });
+  </script>
+</body>
+</html>
